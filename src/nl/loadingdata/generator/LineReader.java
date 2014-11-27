@@ -18,14 +18,15 @@ public class LineReader extends Generator<String> {
 	
 	@Override
 	public void run() {
-		while (true) {
-			try {
+		try {
+			while (true) {
 				String line = reader.readLine();
 				if (line == null) break;
 				yield(line);
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+			reader.close();
+		} catch (IOException e) {
+			pending = e;
 		}
 	}
 

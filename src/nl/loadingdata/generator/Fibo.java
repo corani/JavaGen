@@ -1,5 +1,6 @@
 package nl.loadingdata.generator;
 
+
 public class Fibo extends Generator<Integer> {
 	private int max;
 

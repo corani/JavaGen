@@ -5,6 +5,7 @@ import java.util.Iterator;
 public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T> {
     private boolean ended = false;
     private Queue<T> queue;
+    protected Throwable pending;
 
     // Iterable interface
     @Override
@@ -20,6 +21,8 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
         if (queue == null) {
             queue = new Queue<T>(() -> {
             	run();
+
+            	throwIfPending();
             	
                 ended = true;
             	queue.end();
@@ -30,16 +33,21 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
         Waiter<T> waiter = new Waiter<T>();
         queue.offer(waiter);
 
-        return waiter.hasNext();
+    	boolean hasNext = waiter.hasNext();
+    	throwIfPending();
+		return hasNext;
     }
 
-    @Override
+	@Override
     public T next() {
         Waiter<T> waiter = queue.poll();
         if (waiter == null) {
             throw new IllegalStateException();
         }
-        return waiter.next();
+
+        T next = waiter.next();
+    	throwIfPending();
+		return next;
     }
 
     // Generator interface
@@ -57,6 +65,15 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
                 queue.await();
             }
         }
+    }
+
+    private void throwIfPending() {
+    	System.out.println("ThrowIfPending " + pending);
+    	if (pending != null) {
+    		RuntimeException temp = new RuntimeException(pending);
+    		pending = null;
+    		throw temp;
+    	}
     }
 
 }
