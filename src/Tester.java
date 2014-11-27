@@ -1,17 +1,26 @@
+import nl.loadingdata.generator.Fibo;
 import nl.loadingdata.generator.For;
 import nl.loadingdata.generator.Range;
 
 public class Tester {
 
     public static void main(String[] args) {
+        System.out.println("for Range");
         for (Integer i : Range.of(0, 100)) {
             System.out.println(i);
         }
         
-        Range.of(0, 100)
+        System.out.println("Range.forEach");
+        Range.of(0, 10).inclusive()	
         	 .forEach(System.out::println);
         
-        For.of(0, s -> s + 1, s -> s < 10)
+        System.out.println("For");
+        For.of(0, i -> i + 1, i -> i < 10)
            .forEach(System.out::println);
+        
+        System.out.println("Fibo");
+        for (Integer i : new Fibo(100)) {
+        	System.out.println(i);
+        }
     }
 }
