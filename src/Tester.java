@@ -19,8 +19,7 @@ public class Tester {
            .forEach(System.out::println);
         
         System.out.println("Fibo");
-        for (Integer i : new Fibo(100)) {
-        	System.out.println(i);
-        }
+        Fibo.until(1000)
+        	.forEach(System.out::println);
     }
 }

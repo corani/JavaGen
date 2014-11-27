@@ -7,20 +7,16 @@ public class Fibo extends Generator<Integer> {
 		this.max = -1;
 	}
 	
-	public Fibo(int max) {
-		this.max = max;
+	public static Fibo until(int max) {
+		Fibo result = new Fibo();
+		result.max = max;
+		return result;
 	}
 	
 	@Override
 	public void run() {
-		int a = 0, b = 1;
-		yield(b);
-		while (max < 0 || a + b < max) {
-			int c = a + b;
-			yield(c);
-			a = b;
-			b = c;
-		};
+		yield(1);
+		for (int a=0, b=1, c=0 ; (c=a+b) < max || max < 0 ; yield(c), a=b, b=c);
 	}
 
 }
