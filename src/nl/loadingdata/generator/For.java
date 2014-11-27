@@ -25,7 +25,6 @@ public class For<T> extends Generator<T> {
 			yield(result);
 			result = function.apply(result);
 		}
-		end();
 	}
 	
 }

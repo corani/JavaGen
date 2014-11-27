@@ -23,12 +23,8 @@ public class Range extends Generator<Integer> {
     @Override
     public void run() {
     	int _end = end + (inclusive ? 1 : 0);
-        try {
-            for (int i = start; i < _end; i++) {
-                yield(i);
-            }
-        } finally {
-            end();
+        for (int i = start; i < _end; i++) {
+            yield(i);
         }
     }
 

@@ -18,7 +18,13 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
         if (ended) return false;
 
         if (queue == null) {
-            queue = new Queue<T>(this);
+            queue = new Queue<T>(() -> {
+            	run();
+            	
+                ended = true;
+            	queue.end();
+            	queue = null;
+            });
         }
 
         Waiter<T> waiter = new Waiter<T>();
@@ -51,15 +57,6 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
                 queue.await();
             }
         }
-    }
-
-    /**
-     * Signal that the end has been reached. This unblocks any waiting threads.
-     */
-    protected void end() {
-        ended = true;
-        queue.end();
-        queue = null;
     }
 
 }
