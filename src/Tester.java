@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 import nl.loadingdata.generator.Fibo;
 import nl.loadingdata.generator.For;
 import nl.loadingdata.generator.Generator;
@@ -27,10 +29,20 @@ public class Tester {
 //        LineReader.read(System.in)
 //        	.forEach(line -> System.out.println("> " + line));
         
-        Generator.create(gen -> {
-        	for (int i = 10; i > 0; i--) {
-        		gen.yield(i);
-        	}
-        }).forEach(System.out::println);
+        System.out.println("Nested");
+        squarer(downcounter(10))
+        	.forEach(System.out::println);
+    }
+
+    public static Iterable<Integer> downcounter(int start) {
+    	return Generator.create(gen -> {
+    		for (int i = start; i > 0; i--) gen.yield(i);
+    	});
+    }
+    
+    public static Iterable<Integer> squarer(Iterable<Integer> in) {
+    	return Generator.create(gen -> {
+    		in.forEach(i -> gen.yield(i * i));
+    	});
     }
 }
