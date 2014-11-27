@@ -1,8 +1,10 @@
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.loadingdata.generator.Fibo;
 import nl.loadingdata.generator.For;
 import nl.loadingdata.generator.Generator;
+import nl.loadingdata.generator.ListIterator;
 import nl.loadingdata.generator.Range;
 
 public class Tester {
@@ -31,6 +33,12 @@ public class Tester {
         
         System.out.println("Nested");
         squarer(downcounter(10))
+        	.forEach(System.out::println);
+        
+        List<String> list = new ArrayList<String>();
+        list.add("one");
+        list.add("two");
+        ListIterator.of(list)
         	.forEach(System.out::println);
     }
 
