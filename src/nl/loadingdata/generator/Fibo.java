@@ -15,8 +15,12 @@ public class Fibo extends Generator<Integer> {
 	
 	@Override
 	public void run() {
-		yield(1);
-		for (int a=0, b=1, c=0 ; (c=a+b) < max || max < 0 ; yield(c), a=b, b=c);
+		int a=0, b=1, c=1;
+		yield(c);
+		while ((c=a+b) < max || max < 0) {
+			yield(c);
+			a=b; b=c;
+		}
 	}
 
 }
