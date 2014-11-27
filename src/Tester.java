@@ -1,6 +1,6 @@
 import nl.loadingdata.generator.Fibo;
 import nl.loadingdata.generator.For;
-import nl.loadingdata.generator.LineReader;
+import nl.loadingdata.generator.Generator;
 import nl.loadingdata.generator.Range;
 
 public class Tester {
@@ -23,7 +23,14 @@ public class Tester {
         Fibo.until(1000)
         	.forEach(System.out::println);
         
-        LineReader.read(System.in)
-        	.forEach(line -> System.out.println("> " + line));
+//        System.out.println("Read input");
+//        LineReader.read(System.in)
+//        	.forEach(line -> System.out.println("> " + line));
+        
+        Generator.create(gen -> {
+        	for (int i = 10; i > 0; i--) {
+        		gen.yield(i);
+        	}
+        }).forEach(System.out::println);
     }
 }

@@ -7,6 +7,15 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
     private Queue<T> queue;
     protected Throwable pending;
 
+    public static <T> Generator<T> create(FunctionalGenerator<T> func) {
+    	return new Generator<T>() {
+			@Override
+			public void run() {
+				func.run(this);
+			}
+		};
+    }
+    
     // Iterable interface
     @Override
     public Iterator<T> iterator() {
@@ -57,7 +66,7 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
      *
      * @param value
      */
-    protected void yield(T value) {
+    public void yield(T value) {
         boolean accepted = false;
         while (!accepted) {
             synchronized (queue) {
