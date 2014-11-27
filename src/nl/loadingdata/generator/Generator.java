@@ -68,7 +68,6 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
     }
 
     private void throwIfPending() {
-    	System.out.println("ThrowIfPending " + pending);
     	if (pending != null) {
     		RuntimeException temp = new RuntimeException(pending);
     		pending = null;
