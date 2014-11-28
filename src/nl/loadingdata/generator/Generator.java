@@ -5,7 +5,7 @@ import java.util.Iterator;
 public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T> {
     private boolean ended = false;
     private Queue<T> queue;
-    protected Throwable pending;
+    public Throwable pending;
 
     public static <T> Generator<T> create(FunctionalGenerator<T> func) {
         return new Generator<T>() {
