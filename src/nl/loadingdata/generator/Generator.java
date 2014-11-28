@@ -8,14 +8,14 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
     protected Throwable pending;
 
     public static <T> Generator<T> create(FunctionalGenerator<T> func) {
-    	return new Generator<T>() {
-			@Override
-			public void run() {
-				func.run(this);
-			}
-		};
+        return new Generator<T>() {
+            @Override
+            public void run() {
+                func.run(this);
+            }
+        };
     }
-    
+
     // Iterable interface
     @Override
     public Iterator<T> iterator() {
@@ -29,13 +29,13 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
 
         if (queue == null) {
             queue = new Queue<T>(() -> {
-            	run();
+                run();
 
-            	throwIfPending();
-            	
+                throwIfPending();
+
                 ended = true;
-            	queue.end();
-            	queue = null;
+                queue.end();
+                queue = null;
             });
         }
 
@@ -55,12 +55,11 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
         }
 
         T next = waiter.next();
-    	throwIfPending();
-		return next;
+        throwIfPending();
+        return next;
     }
 
     // Generator interface
-
     /**
      * Offer the value to one of the waiting threads. Blocks until a thread accepts the value, then block until a (new) thread asks for the "next" value.
      *
@@ -77,11 +76,11 @@ public abstract class Generator<T> implements Runnable, Iterator<T>, Iterable<T>
     }
 
     private void throwIfPending() {
-    	if (pending != null) {
-    		RuntimeException temp = new RuntimeException(pending);
-    		pending = null;
-    		throw temp;
-    	}
+        if (pending != null) {
+            RuntimeException temp = new RuntimeException(pending);
+            pending = null;
+            throw temp;
+        }
     }
 
 }
